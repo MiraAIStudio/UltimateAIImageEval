@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Sunburst Chart Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <style>
+        #main {
+            width: 900px;  /* Adjust size based on paper format needs */
+            height: 700px;
+            margin: 0 auto;
+            background-color: #fff; /* Set white background for the container */
+        }
+    </style>
+</head>
+<body>
+<div id="main"></div>
+<script>
+var chartDom = document.getElementById('main');
+var myChart = echarts.init(chartDom);
+
+/* Total data count */
+var TOTAL = 197;
+
+/* To avoid long text like "ChromAIca + Midjourney test_prompt Generator" overflowing,
+   we added line breaks here.
+*/
+var data = [
+    {
+        name: 'DrawBench', value: 77,
+        children: [
+            { name: 'Colors', value: 7 },
+            { name: 'Conflicting', value: 7 },
+            { name: 'Counting', value: 7 },
+            { name: 'DALL-E', value: 7 },
+            { name: 'Descriptions', value: 7 },
+            { name: 'Gary Marcus et al.', value: 7 },
+            { name: 'Misspellings', value: 7 },
+            { name: 'Positional', value: 7 },
+            { name: 'Rare Words', value: 7 },
+            { name: 'Reddit', value: 7 },
+            { name: 'Text', value: 7 }
+        ]
+    },
+    {
+        name: 'DiffusionDB', value: 40,
+        children: [
+            { name: 'Misc', value: 40 }
+        ]
+    },
+    {
+        name: 'ABC-6K', value: 40,
+        children: [
+            { name: 'Hard', value: 40 }
+        ]
+    },
+    {
+        // For this long name, we added line breaks in two places
+        name: 'ChromAIca + Midjourney\n test_prompt Generator', 
+        value: 40,
+        children: [
+            { name: 'Realism', value: 40 }
+        ]
+    }
+];
+
+var option = {
+    // Set global background color to white
+    backgroundColor: '#fff',
+    title: {
+        text: 'Source / Category Data Proportions',
+        left: 'center',
+        top: 10,
+        textStyle: {
+            fontSize: 24  // Make the title font size larger
+        }
+    },
+    series: [{
+        name: 'Source/Category',
+        type: 'sunburst',
+        radius: [0, '90%'],
+        // Adjust the minimum angle to avoid overly narrow sectors in the outer circle
+        minAngle: 8,
+        sort: null,   // Do not sort by value, maintain original order
+        // Use levels to set styles for inner (Source) and outer (Category) circles
+        levels: [
+            // level0: Root node (not displayed)
+            {},
+            // level1: Inner circle (Source)
+            {
+                r0: '15%',
+                r: '45%',
+                label: {
+                    // Display name + value + (global percentage)
+                    formatter: function (params) {
+                        var val = params.data.value;
+                        var ratio = (val / TOTAL * 100).toFixed(2) + '%';
+                        return params.data.name + '\n' + val + ' (' + ratio + ')';
+                    },
+                    fontSize: 14,
+                    fontWeight: 'bold',
+                    rotate: 'tangential'
+                },
+                itemStyle: {
+                    borderWidth: 2
+                }
+            },
+            // level2: Outer circle (Category)
+            {
+                r0: '45%',
+                r: '80%',
+                label: {
+                    formatter: function (params) {
+                        var val = params.data.value;
+                        var ratio = (val / TOTAL * 100).toFixed(2) + '%';
+                        return params.data.name + '\n' + val + ' (' + ratio + ')';
+                    },
+                    fontSize: 11,
+                    rotate: 'tangential'
+                },
+                itemStyle: {
+                    borderWidth: 1
+                }
+            }
+        ],
+        // Data for the Sunburst chart
+        data: data
+    }]
+};
+
+myChart.setOption(option);
+
+
+/* 
+   If you want to export a PNG with a white background, run this in the browser console:
+   var base64 = myChart.getDataURL({ type: 'png', pixelRatio: 2, backgroundColor: '#fff' });
+   console.log(base64);
+   // Then copy the base64 string from the console output and save it as a .png file
+*/
+</script>
+</body> 
+</html>

@@ -12,15 +12,13 @@
 
 ### Installation  
 ```bash  
-git clone https://github.com/yourname/UltimateAIImageEval.git  
+git clone https://github.com/MiraAIStudio/UltimateAIImageEval.git 
 cd UltimateAIImageEval  
-pip install -r requirements.txt  
+
 ```
 
 ### Usage  
-```bash  
-python evaluate.py --model <your_model>  
-```
+
 
 ### Evaluation Metrics  
 📷 **Photo-Realism**  
