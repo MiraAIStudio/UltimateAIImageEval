@@ -1,3 +1,4 @@
+![Sunburst Chart](Sunburst_chart.png)
 The prompts used in the ImagenHub benchmark are derived from a combination of DrawBench, DiffusionDB, ABC-6K, and ChromAIca with Midjourney Prompt Generator. Although the prompts have been selected and categorized, the evaluation value of some prompts is limited. A detailed analysis is provided below:
 
 **Limitations of Prompt Sources:**
